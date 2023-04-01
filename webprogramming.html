@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ToDo APP</title>
+<style>
+.todoapp{
+    padding: 48px;
+	margin : 48px auto;
+	width: 75%;
+    background-color : #ffc107;
+    box-shadow: 5px 5px 5px rgba(192,192,192,0.5);
+}
+h2{
+	font-size : 27px;
+	font-weight :normal;
+}
+hr{
+    border: 0;
+    height: 1px;
+    background: #808080;
+}
+input{
+    flex: 1;
+	font-size: 16px;
+	border : 0;
+	border-radius: 5px;
+	height: 40px;
+	margin : 10px auto;
+}
+.button{
+	background-color : #1e90ff;
+	padding : 10px 13px;
+	height : 40px;
+	font-size : 16px;
+	margin: 10px auto 10px -10px;
+	border : 0;
+	border-radius : 5px;
+	color: #fff;
+}
+.list-group{
+	background-color : #ffefd5;
+	opacity: 0.9;
+	font-size : 17.6px;
+	font-weight : 500;
+	list-style : none;
+	width : 90%;
+    line-height : 40px; 
+    margin-bottom : 9px;
+    padding-left : 10px;
+    border-radius : 5px;
+}
+.list-group li:not(:first-child) {
+  border-top: 0.5px dotted #808080;
+}
+.delete{
+	font-size : 28px;
+	background-color : #ffefd5;
+	border: 0;
+	float : right;
+	margin: 3px 8px 0 0;
+}
+</style>
+<script>
+function addItem(){
+	let todo = document.getElementById("item");
+	let list = document.getElementById("todolist");
+	let listitem = document.createElement("li");
+	let xbtn = document.createElement("button");
+	xbtn.classList.add("delete");
+	xbtn.innerText = "x";
+	xbtn.onclick = function(e){
+		let pnode = e.target.parentNode;
+		list.removeChild(pnode);
+		 setTodoAppHeight(list);
+	}
+	if(todo.value.trim() === '') {
+        return;}
+	listitem.innerText = todo.value;
+	listitem.appendChild(xbtn);
+	list.appendChild(listitem);
+	todo.value="";
+	todo.focus();
+	setTodoAppHeight(list);
+}
+</script>
+</head>
+<body>
+<div class = todoapp>
+<h2>MY ToDo App</h2>
+<hr>
+<div style="display: flex;">
+<input type = "text" id = "item" placeholder = "할 일을 입력하세요..">
+<button type = "button" class= "button" onClick = "addItem()">할 일 추가</button>
+</div>
+<hr>
+<ul id ="todolist" class = "list-group"></ul>
+</div>
+</body>
+</html>
