@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>방명록 입력</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; 
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      margin-top: 10;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      margin-top: 20px; 
+    }
+
+    table {
+      width: 400px;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      table-layout: fixed;
+    }
+
+    table td {
+      padding: 5px; 
+      border: 1px solid #ccc;
+    }
+
+    table td:first-child,
+    table td:last-child {
+      width: 50%; 
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      outline: none; 
+      background-color: transparent; 
+    }
+    
+    .label {
+      color: green;
+      text-align: center;
+    }
+
+    .author-input {
+      background-color: #f2f2f2;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .button-container button {
+      background-color: #148CFF;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    .text-area {
+      width: 400px;
+      height: 150px; 
+      border: 5px solid #ccc;
+      padding: 10px;
+      resize: none;
+    }
+
+    @media (max-width: 400px) {
+      table td:last-child {
+        width: calc(100% - 100px);
+      }
+    }
+  </style>
+  <script src="guestbook.js"></script>
+</head>
+<body>
+  <h1>방명록 입력</h1>
+  <form onsubmit="handleInput(event)" id="guestbookForm">
+    <table>
+      <tr>
+        <td class="label author-input">작성자</td>
+        <td><input type="text" id="author" required></td>
+      </tr>
+      <tr>
+        <td class="label">이메일</td>
+        <td><input type="email" id="email" required></td>
+      </tr>
+      <tr>
+        <td class="label">제목</td>
+        <td><input type="text" id="title" required></td>
+      </tr>
+      <tr>
+        <td class="label">비밀번호</td>
+        <td><input type="password" id="password" required></td>
+      </tr>
+    </table>
+    <div class="text-area">
+      <textarea id="content" placeholder="" required></textarea>
+    </div>
+    <div class="button-container">
+      <button type="submit" onclick="handleInput()">입력</button>
+      <button type="button" onclick="handleCancel()">취소</button>
+      <button onclick="navigateToList()">목록</button>
+    </div>
+  </form>
+</body>
+</html>
