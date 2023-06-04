@@ -1,0 +1,73 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>방명록 목록</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #fff;
+      border-right: 2px solid #ccc;
+    }
+
+    th {
+      background-color: #dcdcdc;
+      color: black;
+      }
+      
+    tr {
+       background-color: #13C7A3;
+       }
+
+    button {
+      display: block;
+      margin: 20px auto;
+      background-color: #148CFF;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+    }
+  </style>
+  <script src="guestbook_list.js"></script>
+</head>
+<body>
+  <h1 style="text-align: center; margin-top: 0;">방명록 목록</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>작성자</th>
+        <th>이메일</th>
+        <th>작성일</th>
+        <th>제목</th>
+      </tr>
+    </thead>
+    <tbody id="guestbookTableBody"></tbody>
+  </table>
+  <button onclick="navigateToInput()">등록</button>
+    <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      displayGuestbookEntries();
+
+      var tableBody = document.querySelector('#guestbookTableBody');
+
+      tableBody.addEventListener('click', function(event) {
+        var target = event.target;
+        if (target.matches('td:nth-child(5)')) {
+          var row = target.parentNode;
+          var index = Array.from(row.parentNode.children).indexOf(row);
+          handleTitleClick(index);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
