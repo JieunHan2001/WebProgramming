@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>방명록 수정</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; 
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      margin-top: 10;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      margin-top: 20px; 
+    }
+
+    table {
+      width: 400px;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      table-layout: fixed;
+    }
+
+    table td {
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
+
+    table td:first-child,
+    table td:last-child {
+      width: 50%; 
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      outline: none; 
+      background-color: transparent; 
+    }
+
+    .label {
+      color: green;
+      text-align: center;
+    }
+
+    .author-input {
+      background-color: #f2f2f2;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .button-container button {
+      background-color: #148CFF;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    .text-area {
+      width: 400px;
+      height: 150px;
+      border: 5px solid #ccc;
+      padding: 10px;
+      resize: none;
+    }
+
+    @media (max-width: 400px) {
+      table td:last-child {
+        width: calc(100% - 100px);
+      }
+    }
+  </style>
+  <script>
+  window.addEventListener('DOMContentLoaded', function() {
+    function handleTitleClick(event) {
+      var titleValue = event.target.textContent;
+
+      var row = event.target.parentNode;
+      var index = Array.from(row.parentNode.children).indexOf(row);
+
+      var guestbookData = JSON.parse(localStorage.getItem('guestbookData')) || [];
+      var entry = guestbookData[index];
+
+      document.getElementById('author').value = entry.author;
+      document.getElementById('email').value = entry.email;
+      document.getElementById('title').value = titleValue;
+      document.getElementById('password').value = entry.password;
+    }
+
+    var titleCells = document.querySelectorAll('#guestbookTableBody td:nth-child(5)');
+    titleCells.forEach(function(cell) {
+      cell.addEventListener('click', handleTitleClick);
+    });
+  });
+
+function handleEdit() {
+  const authorInput = document.getElementById('author');
+  const emailInput = document.getElementById('email');
+  const titleInput = document.getElementById('title');
+  const passwordInput = document.getElementById('password');
+  const contentInput = document.getElementById('content');
+
+  const authorValue = authorInput.value;
+  const emailValue = emailInput.value;
+  const titleValue = titleInput.value;
+  const passwordValue = passwordInput.value;
+  const contentValue = contentInput.value;
+
+  const index = localStorage.getItem('editIndex');
+
+  const guestbookData = JSON.parse(localStorage.getItem('guestbookData')) || [];
+
+  const entry = guestbookData[index];
+
+  if (authorValue.trim() === '' || emailValue.trim() === '' || titleValue.trim() === '' || passwordValue.trim() === '' || contentValue.trim() === '') {
+    alert('모든 항목을 입력해주세요.');
+    return;
+  }
+
+  entry.author = authorValue;
+  entry.email = emailValue;
+  entry.title = titleValue;
+  entry.password = passwordValue;
+  entry.content = contentValue;
+
+  localStorage.setItem('guestbookData', JSON.stringify(guestbookData));
+
+  alert('방명록이 수정되었습니다.');
+
+  window.location.href = 'guestbook_list.html';
+}
+
+function handleCancel() {
+  document.getElementById('author').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('title').value = '';
+  document.getElementById('password').value = '';
+  document.getElementById('content').value = '';
+}
+
+function navigateToList() {
+  location.href = 'guestbook_list.html';
+}
+ </script>
+</head>
+<body>
+  <h1>방명록 수정</h1>
+  <form id="guestbookEditForm">
+    <table>
+      <tr>
+        <td class="label author-input">작성자</td>
+        <td><input type="text" id="author" required></td>
+      </tr>
+      <tr>
+        <td class="label">이메일</td>
+        <td><input type="email" id="email" required></td>
+      </tr>
+      <tr>
+        <td class="label">제목</td>
+        <td><input type="text" id="title" required></td>
+      </tr>
+      <tr>
+        <td class="label">비밀번호</td>
+        <td><input type="password" id="password" required></td>
+      </tr>
+    </table>
+    <div class="text-area">
+      <textarea id="content" placeholder="" required></textarea>
+    </div>
+    <div class="button-container">
+      <button type="submit" onclick="handleEdit()">수정</button>
+      <button type="button" onclick="handleCancel()">삭제</button>
+      <button onclick="navigateToList()">목록</button>
+    </div>
+  </form>
+</body>
+</html>
